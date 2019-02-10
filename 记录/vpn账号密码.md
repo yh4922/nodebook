@@ -24,8 +24,3 @@ Android端：
 
 IOS端：[https://github.com/shadowsocks/shadowsocks-ios/releases](https://github.com/shadowsocks/shadowsocks-ios/releases)
 
-
-
-```bash
-
-```
