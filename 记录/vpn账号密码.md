@@ -23,3 +23,9 @@ PC端：[https://github.com/shadowsocks/shadowsocks-windows/releases](https://gi
 Android端： 
 
 IOS端：[https://github.com/shadowsocks/shadowsocks-ios/releases](https://github.com/shadowsocks/shadowsocks-ios/releases)
+
+
+
+```bash
+
+```
