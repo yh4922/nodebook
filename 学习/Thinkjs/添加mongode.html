@@ -30,4 +30,19 @@ exports.model = {
 &nbsp; &nbsp; }
 &nbsp; }
 }
-</pre><p>3.在文件 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">src/config/extent.js</span> 中tian'ji</p><p><br></p>
+</pre><p>3.在文件 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">src/config/extent.js</span> 中添加扩展</p><pre class="ql-syntax" spellcheck="false">const view = require('think-view');
+const model = require('think-model');
+const cache = require('think-cache');
+const session = require('think-session');
+const mongoose = require('think-mongoose');
+
+module.exports = [
+  view, // make application support view
+  model(think.app),
+  mongoose(think.app),
+  cache,
+  session
+];
+
+
+</pre><p><br></p>
