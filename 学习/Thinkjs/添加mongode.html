@@ -30,12 +30,12 @@ exports.model = {
 &nbsp; &nbsp; }
 &nbsp; }
 }
-</pre><p>3.在文件 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">src/config/extent.js</span> 中添加扩展</p><pre class="ql-syntax" spellcheck="false">const mongoose = require('think-mongoose');
+</pre><h1>3.在文件 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">src/config/extent.js</span> 中添加扩展</h1><pre class="ql-syntax" spellcheck="false">const mongoose = require('think-mongoose');
 
 module.exports = [
   mongoose(think.app),
 ];
-</pre><p>4.创建在 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">model </span>文件下数据库模型</p><pre class="ql-syntax" spellcheck="false">const {SchameTypes, Schema} = require('mongoose');
+</pre><h1>4.创建在 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">model </span>文件下数据库模型</h1><pre class="ql-syntax" spellcheck="false">const {SchameTypes, Schema} = require('mongoose');
 module.exports = class extends think.Mongoose {
 &nbsp; get schema() {
 &nbsp; &nbsp; var _schema = new Schema({
@@ -55,5 +55,5 @@ module.exports = class extends think.Mongoose {
 &nbsp; &nbsp; return _schema;
 &nbsp; }
 }
-</pre><p>5.使用数据库</p><pre class="ql-syntax" spellcheck="false">var db= this.mongoose('mongo/user')
+</pre><h1>5.使用数据库</h1><pre class="ql-syntax" spellcheck="false">var db= this.mongoose('mongo/user')
 </pre><p><br></p>
