@@ -35,5 +35,25 @@ exports.model = {
 module.exports = [
   mongoose(think.app),
 ];
-</pre><p>4.创建在 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">model </span>文件下数据库模型</p><pre class="ql-syntax" spellcheck="false">
+</pre><p>4.创建在 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">model </span>文件下数据库模型</p><pre class="ql-syntax" spellcheck="false">const {SchameTypes, Schema} = require('mongoose');
+module.exports = class extends think.Mongoose {
+&nbsp; get schema() {
+&nbsp; &nbsp; var _schema = new Schema({
+&nbsp; &nbsp; &nbsp; name: {type: String, default: '张三'}
+&nbsp; &nbsp; })
+&nbsp; &nbsp; _schema.pre('save',&nbsp; function(next){
+&nbsp; &nbsp; &nbsp; // 保存进数据库之前的一些操作
+&nbsp; &nbsp; &nbsp; next();
+&nbsp; &nbsp; });
+&nbsp; &nbsp; _schema.pre('update',&nbsp; function(next){
+&nbsp; &nbsp; &nbsp; // 更新数据库据之前的操作
+&nbsp; &nbsp; &nbsp; this.update_time = new Date();
+&nbsp; &nbsp; &nbsp; next();
+&nbsp; &nbsp; });
+&nbsp; &nbsp; _schema.index({status: 1}); // 创建索引
+&nbsp; &nbsp; _schema.index({uid: 1, aid: 1, update_time: -1}); // 组合索引
+&nbsp; &nbsp; return _schema;
+&nbsp; }
+}
+</pre><p>5.使用数据库</p><pre class="ql-syntax" spellcheck="false">
 </pre><p><br></p>
