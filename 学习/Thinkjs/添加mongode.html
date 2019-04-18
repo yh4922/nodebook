@@ -1,6 +1,8 @@
 <attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-60d18719-bd2d-48f9-91ff-53edf540ecd3"></attachment><p>1.安装<span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);"> think-mongoose </span>库</p><pre class="ql-syntax" spellcheck="false">nnpm install --save think-mongoose
 yarn add think-mongoose
-</pre><p>2.在文件 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">src/config/adapter.js</span> 中配置连接</p><pre class="ql-syntax" spellcheck="false">//
+</pre><p>2.在文件 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">src/config/adapter.js</span> 中配置连接</p><pre class="ql-syntax" spellcheck="false">// 调用think-mongoose库
+const mongoose = require('think-mongoose');
+
 // 使用用户授权连接
 exports.model = {
   type: 'mongoose',
@@ -28,4 +30,4 @@ exports.model = {
 &nbsp; &nbsp; }
 &nbsp; }
 }
-</pre><p>3.</p><p><br></p>
+</pre><p>2.在文件 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">src/config/adapter.js</span> 中配置连接</p><p><br></p>
