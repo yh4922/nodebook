@@ -15,6 +15,16 @@ exports.model = {
 }
 
 // 不需要用户密码连接
-
-
+exports.model = {
+&nbsp; type: 'mongoose',
+&nbsp; mongoose: {
+&nbsp; &nbsp; handle: mongoose,
+&nbsp; &nbsp; connectionString: 'mongodb://localhost:27017/sn_skin',
+&nbsp; &nbsp; options: {
+&nbsp; &nbsp; &nbsp; config: {
+&nbsp; &nbsp; &nbsp; &nbsp; autoIndex: false
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; }
+&nbsp; }
+}
 </pre><p><br></p>
