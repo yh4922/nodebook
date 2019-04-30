@@ -1,1 +1,173 @@
-<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-6e6ffd49-4563-45d9-8560-2bc081426007"></attachment><p><br></p>
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-6e6ffd49-4563-45d9-8560-2bc081426007"></attachment><pre class="ql-syntax" spellcheck="false">function Secret_Key(str, pwd, type) {
+&nbsp; var b = new Base64(); //Base64加密
+&nbsp; if (type == 'encryption') {
+&nbsp; &nbsp; str = b.encode(str);//Base64加密
+&nbsp; &nbsp; var prand = "";
+&nbsp; &nbsp; for (var i = 0; i &lt; pwd.length; i++) {
+&nbsp; &nbsp; &nbsp; prand += pwd.charCodeAt(i).toString();
+&nbsp; &nbsp; }
+&nbsp; &nbsp; var sPos = Math.floor(prand.length / 5);
+&nbsp; &nbsp; var mult = parseInt(prand.charAt(sPos) + prand.charAt(sPos * 2) + prand.charAt(sPos * 3) + prand.charAt(sPos * 4) + prand.charAt(sPos * 5));
+&nbsp; &nbsp; var incr = Math.ceil(pwd.length / 2);
+&nbsp; &nbsp; var modu = Math.pow(2, 31) - 1;
+&nbsp; &nbsp; if (mult &lt; 2) {
+&nbsp; &nbsp; &nbsp; alert("Please choose a more complex or longer password.");
+&nbsp; &nbsp; &nbsp; return null;
+&nbsp; &nbsp; }
+&nbsp; &nbsp; var salt = Math.round(Math.random() * 1000000000) % 100000000;
+&nbsp; &nbsp; prand += salt;
+&nbsp; &nbsp; while (prand.length &gt; 10) {
+&nbsp; &nbsp; &nbsp; prand = (parseInt(prand.substring(0, 10)) + parseInt(prand.substring(10, prand.length))).toString();
+&nbsp; &nbsp; }
+&nbsp; &nbsp; prand = (mult * prand + incr) % modu;
+&nbsp; &nbsp; var enc_chr = "";
+&nbsp; &nbsp; var enc_str = "";
+&nbsp; &nbsp; for (var i = 0; i &lt; str.length; i++) {
+&nbsp; &nbsp; &nbsp; enc_chr = parseInt(str.charCodeAt(i) ^ Math.floor((prand / modu) * 255));
+&nbsp; &nbsp; &nbsp; if (enc_chr &lt; 16) {
+&nbsp; &nbsp; &nbsp; &nbsp; enc_str += "0" + enc_chr.toString(16);
+&nbsp; &nbsp; &nbsp; } else enc_str += enc_chr.toString(16);
+&nbsp; &nbsp; &nbsp; prand = (mult * prand + incr) % modu;
+&nbsp; &nbsp; }
+&nbsp; &nbsp; salt = salt.toString(16);
+&nbsp; &nbsp; while (salt.length &lt; 8) salt = "0" + salt;
+&nbsp; &nbsp; enc_str += salt;
+&nbsp; &nbsp; return enc_str;
+&nbsp; }
+&nbsp; if (type == 'decryption') {
+&nbsp; &nbsp; var prand = "";
+&nbsp; &nbsp; for (var i = 0; i &lt; pwd.length; i++) {
+&nbsp; &nbsp; &nbsp; prand += pwd.charCodeAt(i).toString();
+&nbsp; &nbsp; }
+&nbsp; &nbsp; var sPos = Math.floor(prand.length / 5);
+&nbsp; &nbsp; var mult = parseInt(prand.charAt(sPos) + prand.charAt(sPos * 2) + prand.charAt(sPos * 3) + prand.charAt(sPos * 4) + prand.charAt(sPos * 5));
+&nbsp; &nbsp; var incr = Math.round(pwd.length / 2);
+&nbsp; &nbsp; var modu = Math.pow(2, 31) - 1;
+&nbsp; &nbsp; var salt = parseInt(str.substring(str.length - 8, str.length), 16);
+&nbsp; &nbsp; str = str.substring(0, str.length - 8);
+&nbsp; &nbsp; prand += salt;
+&nbsp; &nbsp; while (prand.length &gt; 10) {
+&nbsp; &nbsp; &nbsp; prand = (parseInt(prand.substring(0, 10)) + parseInt(prand.substring(10, prand.length))).toString();
+&nbsp; &nbsp; }
+&nbsp; &nbsp; prand = (mult * prand + incr) % modu;
+&nbsp; &nbsp; var enc_chr = "";
+&nbsp; &nbsp; var enc_str = "";
+&nbsp; &nbsp; for (var i = 0; i &lt; str.length; i += 2) {
+&nbsp; &nbsp; &nbsp; enc_chr = parseInt(parseInt(str.substring(i, i + 2), 16) ^ Math.floor((prand / modu) * 255));
+&nbsp; &nbsp; &nbsp; enc_str += String.fromCharCode(enc_chr);
+&nbsp; &nbsp; &nbsp; prand = (mult * prand + incr) % modu;
+&nbsp; &nbsp; }
+&nbsp; &nbsp; //return enc_str;
+&nbsp; &nbsp; return b.decode(enc_str);
+&nbsp; }
+}
+function Base64() {
+&nbsp; // private property
+&nbsp; _keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
+&nbsp; // public method for encoding
+&nbsp; this.encode = function (input) {
+&nbsp; &nbsp; var output = "";
+&nbsp; &nbsp; var chr1, chr2, chr3, enc1, enc2, enc3, enc4;
+&nbsp; &nbsp; var i = 0;
+&nbsp; &nbsp; input = _utf8_encode(input);
+&nbsp; &nbsp; while (i &lt; input.length) {
+&nbsp; &nbsp; &nbsp; chr1 = input.charCodeAt(i++);
+&nbsp; &nbsp; &nbsp; chr2 = input.charCodeAt(i++);
+&nbsp; &nbsp; &nbsp; chr3 = input.charCodeAt(i++);
+&nbsp; &nbsp; &nbsp; enc1 = chr1 &gt;&gt; 2;
+&nbsp; &nbsp; &nbsp; enc2 = ((chr1 &amp; 3) &lt;&lt; 4) | (chr2 &gt;&gt; 4);
+&nbsp; &nbsp; &nbsp; enc3 = ((chr2 &amp; 15) &lt;&lt; 2) | (chr3 &gt;&gt; 6);
+&nbsp; &nbsp; &nbsp; enc4 = chr3 &amp; 63;
+&nbsp; &nbsp; &nbsp; if (isNaN(chr2)) {
+&nbsp; &nbsp; &nbsp; &nbsp; enc3 = enc4 = 64;
+&nbsp; &nbsp; &nbsp; } else if (isNaN(chr3)) {
+&nbsp; &nbsp; &nbsp; &nbsp; enc4 = 64;
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; output = output +
+&nbsp; &nbsp; &nbsp; &nbsp; _keyStr.charAt(enc1) + _keyStr.charAt(enc2) +
+&nbsp; &nbsp; &nbsp; &nbsp; _keyStr.charAt(enc3) + _keyStr.charAt(enc4);
+&nbsp; &nbsp; }
+&nbsp; &nbsp; return output;
+&nbsp; }
+&nbsp; // public method for decoding
+&nbsp; this.decode = function (input) {
+&nbsp; &nbsp; var output = "";
+&nbsp; &nbsp; var chr1, chr2, chr3;
+&nbsp; &nbsp; var enc1, enc2, enc3, enc4;
+&nbsp; &nbsp; var i = 0;
+&nbsp; &nbsp; input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
+&nbsp; &nbsp; while (i &lt; input.length) {
+&nbsp; &nbsp; &nbsp; enc1 = _keyStr.indexOf(input.charAt(i++));
+&nbsp; &nbsp; &nbsp; enc2 = _keyStr.indexOf(input.charAt(i++));
+&nbsp; &nbsp; &nbsp; enc3 = _keyStr.indexOf(input.charAt(i++));
+&nbsp; &nbsp; &nbsp; enc4 = _keyStr.indexOf(input.charAt(i++));
+&nbsp; &nbsp; &nbsp; chr1 = (enc1 &lt;&lt; 2) | (enc2 &gt;&gt; 4);
+&nbsp; &nbsp; &nbsp; chr2 = ((enc2 &amp; 15) &lt;&lt; 4) | (enc3 &gt;&gt; 2);
+&nbsp; &nbsp; &nbsp; chr3 = ((enc3 &amp; 3) &lt;&lt; 6) | enc4;
+&nbsp; &nbsp; &nbsp; output = output + String.fromCharCode(chr1);
+&nbsp; &nbsp; &nbsp; if (enc3 != 64) {
+&nbsp; &nbsp; &nbsp; &nbsp; output = output + String.fromCharCode(chr2);
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; &nbsp; if (enc4 != 64) {
+&nbsp; &nbsp; &nbsp; &nbsp; output = output + String.fromCharCode(chr3);
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; }
+&nbsp; &nbsp; output = _utf8_decode(output);
+&nbsp; &nbsp; return output;
+&nbsp; }
+&nbsp; // private method for UTF-8 encoding
+&nbsp; _utf8_encode = function (string) {
+&nbsp; &nbsp; string = string.replace(/\r\n/g, "\n");
+&nbsp; &nbsp; var utftext = "";
+&nbsp; &nbsp; for (var n = 0; n &lt; string.length; n++) {
+&nbsp; &nbsp; &nbsp; var c = string.charCodeAt(n);
+&nbsp; &nbsp; &nbsp; if (c &lt; 128) {
+&nbsp; &nbsp; &nbsp; &nbsp; utftext += String.fromCharCode(c);
+&nbsp; &nbsp; &nbsp; } else if ((c &gt; 127) &amp;&amp; (c &lt; 2048)) {
+&nbsp; &nbsp; &nbsp; &nbsp; utftext += String.fromCharCode((c &gt;&gt; 6) | 192);
+&nbsp; &nbsp; &nbsp; &nbsp; utftext += String.fromCharCode((c &amp; 63) | 128);
+&nbsp; &nbsp; &nbsp; } else {
+&nbsp; &nbsp; &nbsp; &nbsp; utftext += String.fromCharCode((c &gt;&gt; 12) | 224);
+&nbsp; &nbsp; &nbsp; &nbsp; utftext += String.fromCharCode(((c &gt;&gt; 6) &amp; 63) | 128);
+&nbsp; &nbsp; &nbsp; &nbsp; utftext += String.fromCharCode((c &amp; 63) | 128);
+&nbsp; &nbsp; &nbsp; }
+
+&nbsp; &nbsp; }
+&nbsp; &nbsp; return utftext;
+&nbsp; }
+&nbsp; // private method for UTF-8 decoding
+&nbsp; _utf8_decode = function (utftext) {
+&nbsp; &nbsp; var string = "";
+&nbsp; &nbsp; var i = 0;
+&nbsp; &nbsp; var c = c1 = c2 = 0;
+&nbsp; &nbsp; while (i &lt; utftext.length) {
+&nbsp; &nbsp; &nbsp; c = utftext.charCodeAt(i);
+&nbsp; &nbsp; &nbsp; if (c &lt; 128) {
+&nbsp; &nbsp; &nbsp; &nbsp; string += String.fromCharCode(c);
+&nbsp; &nbsp; &nbsp; &nbsp; i++;
+&nbsp; &nbsp; &nbsp; } else if ((c &gt; 191) &amp;&amp; (c &lt; 224)) {
+&nbsp; &nbsp; &nbsp; &nbsp; c2 = utftext.charCodeAt(i + 1);
+&nbsp; &nbsp; &nbsp; &nbsp; string += String.fromCharCode(((c &amp; 31) &lt;&lt; 6) | (c2 &amp; 63));
+&nbsp; &nbsp; &nbsp; &nbsp; i += 2;
+&nbsp; &nbsp; &nbsp; } else {
+&nbsp; &nbsp; &nbsp; &nbsp; c2 = utftext.charCodeAt(i + 1);
+&nbsp; &nbsp; &nbsp; &nbsp; c3 = utftext.charCodeAt(i + 2);
+&nbsp; &nbsp; &nbsp; &nbsp; string += String.fromCharCode(((c &amp; 15) &lt;&lt; 12) | ((c2 &amp; 63) &lt;&lt; 6) | (c3 &amp; 63));
+&nbsp; &nbsp; &nbsp; &nbsp; i += 3;
+&nbsp; &nbsp; &nbsp; }
+&nbsp; &nbsp; }
+&nbsp; &nbsp; return string;
+&nbsp; }
+}
+function secreKey (keystr) {
+&nbsp; this.keystr = keystr || 'lvpGCdwe8eFwmuh' // 默认秘钥
+&nbsp; return this
+}
+secreKey.prototype.encode = function (str) {
+&nbsp; return Secret_Key(str,this.keystr,'encryption')
+}
+secreKey.prototype.decode = function (str) {
+&nbsp; return Secret_Key(str,this.keystr,'decryption')
+}
+
+</pre><p><br></p>
