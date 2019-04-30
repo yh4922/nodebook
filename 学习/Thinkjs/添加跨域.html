@@ -4,5 +4,12 @@ yarn add koa-cors
 {
   handle: cors
 }
-</pre><h1>3.跳过 option 请求</h1><p>创建中间件 </p><pre class="ql-syntax" spellcheck="false">
+</pre><h1>3.跳过 option 请求</h1><p>在 src/middleware 创建中间件  indextest.js</p><pre class="ql-syntax" spellcheck="false">module.exports = (options, app) =&gt; {
+  return async (ctx, next) =&gt; {
+    if (ctx.method === 'OPTIONS') {
+      return ctx.json({msg:'Ok'})
+    }
+    return next()
+  }
+}
 </pre><p><br></p>
