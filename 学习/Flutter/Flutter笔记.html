@@ -6,5 +6,6 @@
 }
 </pre><p>依赖包</p><pre class="ql-syntax" spellcheck="false">import 'dart:io';
 import 'package:flutter/services.dart';
-</pre><h2>2.APP全屏隐藏状态栏</h2><pre class="ql-syntax" spellcheck="false">SystemChrome.setEnabledSystemUIOverlays([]); // yin'can
+</pre><h2>2.APP全屏隐藏状态栏</h2><pre class="ql-syntax" spellcheck="false">SystemChrome.setEnabledSystemUIOverlays([]); // 隐藏
+SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top, SystemUiOverlay.bottom]); // 打开顶部状态栏 和底部虚拟按钮
 </pre><p><br></p>
