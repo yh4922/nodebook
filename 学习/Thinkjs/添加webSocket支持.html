@@ -3,27 +3,21 @@ yarn add think-websocket-ws
 </pre><h1>2.在文件 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">src/config/adapter.js</span> 中配置连接</h1><pre class="ql-syntax" spellcheck="false">// 调用think-websocket-ws库
 const ws = require('think-websocket-ws');
 
-// 使用用户授权连接
-exports.model = {
-  type: 'mongoose',
-  mongoose: {
-    handle: mongoose,
-    host: '192.168.1.148',
-    user: 'bbstest',
-    password: '123456',
-    database: 'bbstest',
-    useCollectionPlural: false,
-    options: {}
-  }
-}
-
-// 不需要用户密码连接
-exports.model = {
-  type: 'mongoose',
-  mongoose: {
-    handle: mongoose,
-    connectionString: 'mongodb://localhost:27017/sn_tongji',
-    options: { config: {autoIndex: false} }
+/**
+ * websocket配置
+ * websocket adapter config
+ * @type {Object}
+ */
+exports.websocket = {
+  type: 'ws',
+  common: {},
+  ws: {
+    handle: ws,
+    path: '/ws',  
+    messages: [{
+      open: '/socketio/open', // 链接打开
+      /*so*/
+    }]
   }
 }
 </pre><h1>3.在文件 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">src/config/extent.js</span> 中添加扩展</h1><pre class="ql-syntax" spellcheck="false">const mongoose = require('think-mongoose');
