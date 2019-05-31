@@ -29,6 +29,14 @@ module.exports = [
   websocket(think.app),
 ];
 </pre><h1>4.创建在 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">controller </span>文件下创建控制器</h1><pre class="ql-syntax" spellcheck="false">module.exports = class extends think.Controller {
-
+  constructor(...arg) {
+    super(...arg)
+  }
+  async openAction () {
+    var data = this.wsData.data
+    this.emit()
+    return this.success()
+  }
+}
 </pre><h1>5.使用数据库</h1><pre class="ql-syntax" spellcheck="false">var db= this.mongoose('mongo/user')
 </pre><p><br></p>
