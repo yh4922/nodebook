@@ -28,25 +28,7 @@ exports.websocket = {
 module.exports = [
   websocket(think.app),
 ];
-</pre><h1>4.创建在 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">controller </span>文件下创建控制器</h1><pre class="ql-syntax" spellcheck="false">const {SchameTypes, Schema} = require('mongoose');
-module.exports = class extends think.Mongoose {
-&nbsp; get schema() {
-&nbsp; &nbsp; var _schema = new Schema({
-&nbsp; &nbsp; &nbsp; name: {type: String, default: '张三'}
-&nbsp; &nbsp; })
-&nbsp; &nbsp; _schema.pre('save',&nbsp; function(next){
-&nbsp; &nbsp; &nbsp; // 保存进数据库之前的一些操作
-&nbsp; &nbsp; &nbsp; next();
-&nbsp; &nbsp; });
-&nbsp; &nbsp; _schema.pre('update',&nbsp; function(next){
-&nbsp; &nbsp; &nbsp; // 更新数据库据之前的操作
-&nbsp; &nbsp; &nbsp; this.update_time = new Date();
-&nbsp; &nbsp; &nbsp; next();
-&nbsp; &nbsp; });
-&nbsp; &nbsp; _schema.index({status: 1}); // 创建索引
-&nbsp; &nbsp; _schema.index({uid: 1, aid: 1, update_time: -1}); // 组合索引
-&nbsp; &nbsp; return _schema;
-&nbsp; }
-}
+</pre><h1>4.创建在 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">controller </span>文件下创建控制器</h1><pre class="ql-syntax" spellcheck="false">module.exports = class extends think.Controller {
+
 </pre><h1>5.使用数据库</h1><pre class="ql-syntax" spellcheck="false">var db= this.mongoose('mongo/user')
 </pre><p><br></p>
