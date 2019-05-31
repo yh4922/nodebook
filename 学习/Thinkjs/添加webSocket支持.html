@@ -1,0 +1,55 @@
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-3d96627c-afa1-4fd1-aa08-294d236565c2"></attachment><p><br></p><attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-60d18719-bd2d-48f9-91ff-53edf540ecd3"></attachment><h1>1.安装 think-websocket-ws 库</h1><pre class="ql-syntax" spellcheck="false">nnpm install --save think-websocket-ws
+yarn add think-websocket-ws
+</pre><h1>2.在文件 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">src/config/adapter.js</span> 中配置连接</h1><pre class="ql-syntax" spellcheck="false">// 调用think-mongoose库
+const mongoose = require('think-mongoose');
+
+// 使用用户授权连接
+exports.model = {
+  type: 'mongoose',
+  mongoose: {
+    handle: mongoose,
+    host: '192.168.1.148',
+    user: 'bbstest',
+    password: '123456',
+    database: 'bbstest',
+    useCollectionPlural: false,
+    options: {}
+  }
+}
+
+// 不需要用户密码连接
+exports.model = {
+  type: 'mongoose',
+  mongoose: {
+    handle: mongoose,
+    connectionString: 'mongodb://localhost:27017/sn_tongji',
+    options: { config: {autoIndex: false} }
+  }
+}
+</pre><h1>3.在文件 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">src/config/extent.js</span> 中添加扩展</h1><pre class="ql-syntax" spellcheck="false">const mongoose = require('think-mongoose');
+
+module.exports = [
+  mongoose(think.app),
+];
+</pre><h1>4.创建在 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">model </span>文件下数据库模型</h1><pre class="ql-syntax" spellcheck="false">const {SchameTypes, Schema} = require('mongoose');
+module.exports = class extends think.Mongoose {
+&nbsp; get schema() {
+&nbsp; &nbsp; var _schema = new Schema({
+&nbsp; &nbsp; &nbsp; name: {type: String, default: '张三'}
+&nbsp; &nbsp; })
+&nbsp; &nbsp; _schema.pre('save',&nbsp; function(next){
+&nbsp; &nbsp; &nbsp; // 保存进数据库之前的一些操作
+&nbsp; &nbsp; &nbsp; next();
+&nbsp; &nbsp; });
+&nbsp; &nbsp; _schema.pre('update',&nbsp; function(next){
+&nbsp; &nbsp; &nbsp; // 更新数据库据之前的操作
+&nbsp; &nbsp; &nbsp; this.update_time = new Date();
+&nbsp; &nbsp; &nbsp; next();
+&nbsp; &nbsp; });
+&nbsp; &nbsp; _schema.index({status: 1}); // 创建索引
+&nbsp; &nbsp; _schema.index({uid: 1, aid: 1, update_time: -1}); // 组合索引
+&nbsp; &nbsp; return _schema;
+&nbsp; }
+}
+</pre><h1>5.使用数据库</h1><pre class="ql-syntax" spellcheck="false">var db= this.mongoose('mongo/user')
+</pre><p><br></p>
