@@ -23,10 +23,10 @@ exports.websocket = {
     }]
   }
 }
-</pre><h1>3.在文件 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">src/config/extent.js</span> 中添加扩展</h1><pre class="ql-syntax" spellcheck="false">const mongoose = require('think-mongoose');
+</pre><h1>3.在文件 <span style="background-color: rgb(102, 185, 102); color: rgb(204, 232, 204);">src/config/extent.js</span> 中添加扩展</h1><pre class="ql-syntax" spellcheck="false">const websocket = require('think-websocket');
 
 module.exports = [
-  mongoose(think.app),
+  websocket(think.app),
 ];
 </pre><h1>4.创建在 <span style="color: rgb(204, 232, 204); background-color: rgb(102, 185, 102);">model </span>文件下数据库模型</h1><pre class="ql-syntax" spellcheck="false">const {SchameTypes, Schema} = require('mongoose');
 module.exports = class extends think.Mongoose {
