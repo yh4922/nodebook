@@ -1,1 +1,13 @@
-<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-e19ac06a-0754-422c-8a3a-c38018472ea1"></attachment><p><br></p><p><br></p>
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-e19ac06a-0754-422c-8a3a-c38018472ea1"></attachment><p><br></p><pre class="ql-syntax" spellcheck="false">let param = new FormData()
+param.append('files', newfile)
+let config = {
+  headers: {'Content-Type': 'multipart/form-data'},
+  onUploadProgress: e =&gt; { // 上传进度
+    var completeProgress = ((e.loaded / e.total * 100) | 0) + '%'
+    console.log(completeProgress)
+  }
+}
+axios.post('upload_url', param, config).then((e) =&gt; {
+  console.log(e.data)
+})
+</pre><p><br></p>
