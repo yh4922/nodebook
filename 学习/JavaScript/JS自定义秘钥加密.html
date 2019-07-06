@@ -169,8 +169,7 @@ secreKey.prototype.encode = function (str) {
 secreKey.prototype.decode = function (str) {
 &nbsp; return Secret_Key(str,this.keystr,'decryption')
 }
-
-</pre><p>使用 </p><pre class="ql-syntax" spellcheck="false">var _secreKey = new secreKey('12345678')
+</pre><p>使用</p><p><br></p><pre class="ql-syntax" spellcheck="false">var _secreKey = new secreKey('12345678')
 _secreKey.encode('你好') // c2911d5deeb51ec900320923
 _secreKey.decode('c2911d5deeb51ec900320923') // 你好
 </pre><p><br></p>
