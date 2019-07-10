@@ -8,6 +8,5 @@
 import 'package:flutter/services.dart';
 </pre><h2><br></h2><h2>2.APP全屏隐藏状态栏</h2><p>需要切换状态栏状态是调用</p><pre class="ql-syntax" spellcheck="false">SystemChrome.setEnabledSystemUIOverlays([]); // 隐藏
 SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top, SystemUiOverlay.bottom]); // 打开顶部状态栏 和底部虚拟按钮(如果有)
-</pre><p><br></p><pre class="ql-syntax" spellcheck="false">3.屏隐获取键盘高度
-</pre><h2>藏状态</h2><p><br></p><pre class="ql-syntax" spellcheck="false">var padding = MediaQuery.of(context).viewInsets; // 获取键盘高度
+</pre><p><br></p><h2>3.获取键盘高度</h2><pre class="ql-syntax" spellcheck="false">var padding = MediaQuery.of(context).viewInsets; // 获取键盘高度
 </pre><p><br></p>
