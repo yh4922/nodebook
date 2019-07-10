@@ -1,11 +1,11 @@
-<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-64a18c57-4e76-4762-be87-f63f4c68dda9"></attachment><h2>1.添加沉浸式状态栏</h2><p>代码添加在 main函数里面</p><p><br></p><pre class="ql-syntax" spellcheck="false">if (Platform.isAndroid) { // 判断是不是安装系统，是的话设置沉浸式状态栏
+<attachment contenteditable="false" data-atts="%5B%5D" data-aid=".atts-64a18c57-4e76-4762-be87-f63f4c68dda9"></attachment><h2>1.添加沉浸式状态栏</h2><p>代码添加在 main函数里面</p><pre class="ql-syntax" spellcheck="false">if (Platform.isAndroid) { // 判断是不是安装系统，是的话设置沉浸式状态栏
   SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(
     statusBarColor: Colors.transparent
   );
   SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
 }
-</pre><p>依赖包</p><p><br></p><pre class="ql-syntax" spellcheck="false">import 'dart:io';
+</pre><p>依赖包</p><pre class="ql-syntax" spellcheck="false">import 'dart:io';
 import 'package:flutter/services.dart';
-</pre><h2><br></h2><h2>2.APP全屏隐藏状态栏</h2><p>需要切换状态栏状态是调用</p><p><br></p><pre class="ql-syntax" spellcheck="false">SystemChrome.setEnabledSystemUIOverlays([]); // 隐藏
+</pre><h2><br></h2><h2>2.APP全屏隐藏状态栏</h2><p>需要切换状态栏状态是调用</p><pre class="ql-syntax" spellcheck="false">SystemChrome.setEnabledSystemUIOverlays([]); // 隐藏
 SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top, SystemUiOverlay.bottom]); // 打开顶部状态栏 和底部虚拟按钮(如果有)
 </pre><p><br></p>
